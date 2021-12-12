@@ -1,3 +1,8 @@
 #include <stdint.h>
 #include <stddef.h>
-#include <
+#include <vector>
+#include <string>
+#include "Python.h"
+#include "audio_decode.hpp"
+
+
