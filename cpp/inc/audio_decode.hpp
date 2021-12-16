@@ -24,7 +24,3 @@ namespace AudioDecode {
     size_t _decode_little_endian(std::vector<uint8_t> data, size_t start, size_t end);
     std::string _uint_to_ascii(size_t num);
 };
-
-namespace AudioDecode_PyWrappers {
-    PyObject* decode_wav(PyObject* self, PyObject* args);
-};
