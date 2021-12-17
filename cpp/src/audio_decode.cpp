@@ -4,9 +4,18 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <filesystem>
 #include <algorithm>
-#include "Python.h"
+#include <cassert>
+#include <boost/python.hpp>
 #include "audio_decode.hpp"
+
+void test() { std::cout << "I'm so fucking good" << std::endl; }
+
+BOOST_PYTHON_MODULE(audio_decode) {
+    boost::python::def("decode_wav", AudioDecode::decode_wav);
+    boost::python::def("test", test);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // AudioDecode
@@ -58,6 +67,10 @@ AudioData AudioDecode::decode_wav(std::string filepath) {
 }
 
 std::vector<uint8_t> AudioDecode::_read_file(std::string filepath) {
+    if (!std::filesystem::exists(filepath)) {
+        throw std::runtime_error("AudioDecode::_read_file: file does not exist...");
+    }
+
     std::streampos file_size;
     std::ifstream file(filepath, std::ios::binary);
 

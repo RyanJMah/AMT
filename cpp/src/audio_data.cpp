@@ -7,3 +7,4 @@ AudioData::AudioData(double sample_rate, uint32_t bit_depth, std::vector<int32_t
     this->bit_depth = bit_depth;
     this->samples = samples;
 }
+

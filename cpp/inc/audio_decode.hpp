@@ -4,7 +4,6 @@
 #include <string>
 #include <stdint.h>
 #include <stddef.h>
-#include "Python.h"
 #include "audio_data.hpp"
 
 #define WAV_NUM_CHANNELS_START 22
@@ -24,3 +23,4 @@ namespace AudioDecode {
     size_t _decode_little_endian(std::vector<uint8_t> data, size_t start, size_t end);
     std::string _uint_to_ascii(size_t num);
 };
+
