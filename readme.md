@@ -7,8 +7,8 @@ This project attempts to build an automatic music transciber using digital signa
 git clone https://github.com/RyanJMah/AMT.git
 cd AMT
 
-# pull the submodules (this will take a while)
-git submodule update --init --recursive --remote
+# install the boost library
+sudo apt-get install libboost-all-dev
 
 # create a Python virtual env and source it
 python3 -m venv env

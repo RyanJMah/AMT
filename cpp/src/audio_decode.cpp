@@ -9,31 +9,6 @@
 #include "audio_decode.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// AudioDecode_PyWrappers
-static PyMethodDef py_module_methods[] = {
-    {"decode_wav", AudioDecode_PyWrappers::decode_wav, METH_VARARGS, ""},
-    {NULL, NULL, 0, NULL}
-};
-static struct PyModuleDef py_module_def = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "audio_decode",
-    .m_doc = "Functions to decode audio files",
-    .m_size = -1,
-    .m_methods = py_module_methods
-};
-PyMODINIT_FUNC PyInit_audio_decode() { std::cout << "asdfaf" << std::endl; return PyModule_Create(&py_module_def); }
-
-PyObject* AudioDecode_PyWrappers::decode_wav(PyObject* self, PyObject* args) {
-    char* filepath;
-    if (!PyArg_ParseTuple(args, "s", &filepath)) { return NULL; }
-
-    std::string s_filepath(filepath);
-    AudioDecode::decode_wav(s_filepath);
-    Py_RETURN_NONE;
-}
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 // AudioDecode
 AudioData AudioDecode::decode_wav(std::string filepath) {
     std::vector<uint8_t> raw_hex = AudioDecode::_read_file(filepath);
