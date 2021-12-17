@@ -1,6 +1,6 @@
 SHELL = bash
 
-TARGET = audio_decode
+TARGET = sp-lib
 BUILD_DIR = build
 VENV_DIR = ../env
 DEBUG = 1
