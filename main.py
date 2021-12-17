@@ -3,11 +3,12 @@ import sys
 
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-import audio_decode
+import lib.asdf as asdf
+import lib.audio_decode as audio_decode
 
 def main():
-    audio_decode.test()
-    audio_decode.decode_wav("asdf")
+    asdf.test()
+    # audio_decode.decode_wav("asdf")
 
 if __name__ == "__main__":
     main()
