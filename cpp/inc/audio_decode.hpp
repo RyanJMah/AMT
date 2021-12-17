@@ -24,3 +24,4 @@ namespace AudioDecode {
     std::string _uint_to_ascii(size_t num);
 };
 
+void test();

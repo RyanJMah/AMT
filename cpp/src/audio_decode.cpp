@@ -14,6 +14,9 @@ void test() { std::cout << "I'm so fucking good" << std::endl; }
 
 BOOST_PYTHON_MODULE(audio_decode) {
     boost::python::def("decode_wav", AudioDecode::decode_wav);
+}
+
+BOOST_PYTHON_MODULE(asdf) {
     boost::python::def("test", test);
 }
 

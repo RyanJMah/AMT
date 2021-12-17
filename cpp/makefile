@@ -2,7 +2,7 @@ SHELL = bash
 
 TARGET = sp-lib
 BUILD_DIR = build
-VENV_DIR = ../env
+LIB_DIR = ../lib
 DEBUG = 1
 
 OPT = -O0
@@ -44,7 +44,7 @@ LIBS = \
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
 vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 
-all: binaries install
+all: binaries distribute
 
 binaries: $(BUILD_DIR)/$(TARGET).so
 
@@ -62,9 +62,9 @@ $(BUILD_DIR):
 	mkdir $@
 	@echo ""
 
-install:
-	cp $(BUILD_DIR)/$(TARGET).so $(VENV_DIR)/lib/python$(PY_VER)/site-packages
+distribute: $(BUILD_DIR)/$(TARGET).so
+	cp $(BUILD_DIR)/$(TARGET).so $(LIB_DIR)
 
 clean:
 	rm -rf $(BUILD_DIR)
-	rm $(VENV_DIR)/lib/python$(PY_VER)/site-packages/$(TARGET).so
+	rm $(LIB_DIR)/$(TARGET).so
