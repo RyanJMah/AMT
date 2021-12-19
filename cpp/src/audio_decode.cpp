@@ -51,6 +51,11 @@ AudioData audio_decode::decode_wav(std::string filepath) {
     uint32_t bit_depth = _decode_little_endian(
         &raw_data[indx + BIT_DEPTH_START], &raw_data[indx + BIT_DEPTH_END]);
 
+    if (bit_depth != 16) {
+        throw std::runtime_error(
+            "audio_decode::decode_wav: only files with a bit depth of 16 are currently supported");
+    }
+
     // go to the data section
     std::vector<uint8_t> data_ = {'d','a','t', 'a'};
     it = std::search(raw_data.begin(), raw_data.end(), data_.begin(), data_.end());
@@ -61,7 +66,6 @@ AudioData audio_decode::decode_wav(std::string filepath) {
 
     indx += SAMPLES_START;
 
-    assert( (bit_depth % 8) == 0 );
     uint32_t byte_step = bit_depth/8;
 
     // this entire section below this comment is super sketchy... TOO BAD!
