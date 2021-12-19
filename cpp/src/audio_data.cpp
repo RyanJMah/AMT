@@ -6,7 +6,7 @@
 #include <string>
 #include "audio_data.hpp"
 
-AudioData::AudioData(double sample_rate_, uint32_t bit_depth_, std::vector<int32_t> samples_):
+audio_decode::AudioData::AudioData(double sample_rate_, uint32_t bit_depth_, std::vector<int32_t> samples_):
 sample_rate{sample_rate_},
 bit_depth{bit_depth_},
 samples{samples_}
@@ -14,7 +14,7 @@ samples{samples_}
 // empty
 }
 
-void AudioData::to_csv(std::string filepath) {
+void audio_decode::AudioData::to_csv(std::string filepath) {
 	std::ofstream out_file;
 	out_file.open(filepath);
 

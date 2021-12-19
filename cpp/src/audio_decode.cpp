@@ -11,7 +11,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // audio_decode
-AudioData audio_decode::decode_wav(std::string filepath) {
+audio_decode::AudioData audio_decode::decode_wav(std::string filepath) {
     using namespace audio_decode;
 
     // read the file
