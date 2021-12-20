@@ -1,12 +1,15 @@
-#pragma once 
+#pragma once
 
 #include <vector>
 #include <complex>
+#include <string>
+#include "audio_decode.hpp"
 
 namespace dsp {
-    class FrequencyData {
+    class TimeData {
         public:
-            FrequencyData(double f_step_, std::vector<std::complex<double>> bins_);
+            TimeData(double t_step_, std::vector<std::complex<double>> bins);
+            TimeData(audio_decode::AudioData data);
             void to_csv(std::string filepath, std::string form);
 
             std::vector<double> mag();
@@ -15,7 +18,7 @@ namespace dsp {
             std::vector<double> im();
 
         public:
-            double f_step;
+            double t_step;
             std::vector<std::complex<double>> bins;
     };
 }

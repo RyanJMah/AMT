@@ -80,13 +80,16 @@ vector<complex<double>> dsp::fft(vector<complex<double>> x) {
 
     return ret;
 }
-dsp::FrequencyData dsp::fft_with_metadata(audio_decode::AudioData data) {
+dsp::FrequencyData dsp::fft_with_metadata(dsp::TimeData data) {
     using namespace dsp;
 
-    vector<complex<double>> x(data.samples.begin(), data.samples.end());
+    // vector<complex<double>> x(data.bins.begin(), data.bins.end());
+    vector<complex<double>> x = data.bins;
 
     vector<complex<double>> X = fft(x);
-    double f_step = data.sample_rate/X.size();
+
+    double sample_rate = 1/data.t_step;
+    double f_step = sample_rate/X.size();
 
     return FrequencyData(f_step, X);
 }

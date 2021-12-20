@@ -6,25 +6,32 @@
 #include <iomanip>
 #include <fstream>
 #include "misc.hpp"
-#include "frequency_data.hpp"
+#include "time_data.hpp"
 
 using std::vector;
 using std::complex;
 
-dsp::FrequencyData::FrequencyData(double f_step_, vector<complex<double>> bins_):
-f_step{f_step_},
+dsp::TimeData::TimeData(double t_step_, vector<complex<double>> bins_):
+t_step{t_step_},
 bins{bins_}
 {
 
 }
-void dsp::FrequencyData::to_csv(std::string filepath, std::string form) {
+dsp::TimeData::TimeData(audio_decode::AudioData data) {
+    this->t_step = 1/data.sample_rate;
+    
+    vector<complex<double>> tmp(data.samples.begin(), data.samples.end());
+    this->bins = tmp;
+}
+
+void dsp::TimeData::to_csv(std::string filepath, std::string form) {
     std::ofstream out_file;
 	out_file.open(filepath);
 
     if (form == "complex") {
         for (size_t i = 0; i < this->bins.size(); i++) {
             out_file << std::fixed << std::setprecision(15);
-            out_file << i*this->f_step << "," << this->bins[i] << "\n";
+            out_file << i*this->t_step << "," << this->bins[i] << "\n";
         }
     }
     else if (form == "real") {
@@ -32,7 +39,7 @@ void dsp::FrequencyData::to_csv(std::string filepath, std::string form) {
 
         for (size_t i = 0; i < this->bins.size(); i++) {
             out_file << std::fixed << std::setprecision(15);
-            out_file << i*this->f_step << "," << re_bins[i] << "\n";
+            out_file << i*this->t_step << "," << re_bins[i] << "\n";
         }
     }
     else if (form == "imaginary") {
@@ -40,7 +47,7 @@ void dsp::FrequencyData::to_csv(std::string filepath, std::string form) {
 
         for (size_t i = 0; i < this->bins.size(); i++) {
             out_file << std::fixed << std::setprecision(15);
-            out_file << i*this->f_step << "," << im_bins[i] << "\n";
+            out_file << i*this->t_step << "," << im_bins[i] << "\n";
         }
     }
     else if (form == "magnitude") {
@@ -48,7 +55,7 @@ void dsp::FrequencyData::to_csv(std::string filepath, std::string form) {
 
         for (size_t i = 0; i < this->bins.size(); i++) {
             out_file << std::fixed << std::setprecision(15);
-            out_file << i*this->f_step << "," << mag_bins[i] << "\n";
+            out_file << i*this->t_step << "," << mag_bins[i] << "\n";
         }
     }
     else if (form == "phase") {
@@ -56,7 +63,7 @@ void dsp::FrequencyData::to_csv(std::string filepath, std::string form) {
 
         for (size_t i = 0; i < this->bins.size(); i++) {
             out_file << std::fixed << std::setprecision(15);
-            out_file << i*this->f_step << "," << phase_bins[i] << "\n";
+            out_file << i*this->t_step << "," << phase_bins[i] << "\n";
         }
     }
     else {
@@ -66,7 +73,9 @@ void dsp::FrequencyData::to_csv(std::string filepath, std::string form) {
 
 	out_file.close();
 }
-vector<double> dsp::FrequencyData::mag() { return dsp::mag(this->bins); }
-vector<double> dsp::FrequencyData::arg() { return dsp::arg(this->bins); }
-vector<double> dsp::FrequencyData::re() { return dsp::re(this->bins); }
-vector<double> dsp::FrequencyData::im() { return dsp::im(this->bins); }
+
+std::vector<double> dsp::TimeData::mag() { return dsp::mag(this->bins); }
+std::vector<double> dsp::TimeData::arg() { return dsp::arg(this->bins); }
+std::vector<double> dsp::TimeData::re() { return dsp::re(this->bins); }
+std::vector<double> dsp::TimeData::im() { return dsp::im(this->bins); }
+
