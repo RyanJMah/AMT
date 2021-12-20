@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <algorithm>
 #include "frequency_data.hpp"
 
 using std::vector;

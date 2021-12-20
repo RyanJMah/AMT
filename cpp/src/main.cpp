@@ -1,7 +1,6 @@
 #include <iostream>
-#include "audio_data.hpp"
 #include "audio_decode.hpp"
-#include "fft.hpp"
+#include "dsp.hpp"
 
 int main();
 
@@ -25,6 +24,9 @@ int main() {
     f_data.to_csv("../freq_domain_complex.csv", "complex");
     f_data.to_csv("../freq_domain_mag.csv", "magnitude");
     f_data.to_csv("../freq_domain_phase.csv", "phase");
+
+    dsp::FrequencyData hps = dsp::harmonic_product_spectrum(f_data, 4);
+    hps.to_csv("../freq_domain_hps.csv", "magnitude");
 
     return 0;
 }
