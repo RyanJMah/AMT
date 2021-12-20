@@ -1,14 +1,19 @@
 #include <iostream>
 #include "audio_data.hpp"
 #include "audio_decode.hpp"
-#include "dsp.hpp"
+#include "fft.hpp"
 
 int main();
 
 int main() {
-    // AudioData data = audio_decode::decode_wav("../samples/Chopin_Nocturne_Op_32 No_2_in_A-flat_Major.wav");
-    // audio_decode::AudioData data = audio_decode::decode_wav("../samples/Piano_A_440.wav");
-    audio_decode::AudioData data = audio_decode::decode_wav("../samples/Sine_Wave_A_440.wav");
+    // audio_decode::AudioData data = audio_decode::decode_wav(
+    //     "../samples/Chopin_Nocturne_Op_32 No_2_in_A-flat_Major.wav");
+
+    // audio_decode::AudioData data = audio_decode::decode_wav(
+    //     "../samples/eaJ_x_Seori-It _just_is_(Feat_Keshi's_Strat).wav");
+
+    audio_decode::AudioData data = audio_decode::decode_wav("../samples/Piano_A_440.wav");
+    // audio_decode::AudioData data = audio_decode::decode_wav("../samples/Sine_Wave_A_440.wav");
 
     std::cout << "data.sample_rate = " << data.sample_rate << std::endl;
     std::cout << "data.bit_depth = " << data.bit_depth << std::endl;
