@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+// I know I should probably be inheriting from something here, but I'm also lazy so too bad
+
 namespace audio_decode {
     class AudioData {
         public:

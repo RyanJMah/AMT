@@ -8,12 +8,11 @@
 using std::vector;
 using std::complex;
 
-dsp::FrequencyData dsp::harmonic_product_spectrum(dsp::FrequencyData data, uint32_t num_harmonics) {
+dsp::FrequencyData amt::harmonic_product_spectrum(dsp::FrequencyData data, uint32_t num_harmonics) {
     vector<complex<double>> x = data.bins;
     size_t N = x.size();
 
-    vector<complex<double>> Y;
-    Y.resize(N);
+    vector<complex<double>> Y(N);
 
     for (size_t i = 0; i < (N/num_harmonics); i++) {
         complex<double> product = x[i];
@@ -23,5 +22,5 @@ dsp::FrequencyData dsp::harmonic_product_spectrum(dsp::FrequencyData data, uint3
         Y[i] = product;
     }
 
-    return FrequencyData(data.f_step, Y);
+    return dsp::FrequencyData(data.f_step, Y);
 }

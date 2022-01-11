@@ -7,6 +7,7 @@
 #include <string>
 #include <algorithm>
 #include "frequency_data.hpp"
+#include "misc.hpp"
 #include "fft.hpp"
 
 using std::vector;
@@ -32,10 +33,8 @@ vector<complex<double>> dsp::_fft_recursive(vector<complex<double>> x) {
     // recursive case
     else {
         // separate the odd and even bins
-        vector<complex<double>> even;
-        vector<complex<double>> odd;
-        even.resize(N/2);
-        odd.resize(N/2);
+        vector<complex<double>> even(N/2);
+        vector<complex<double>> odd(N/2);
 
         for (size_t i = 0; i < N/2; i += 2) {
             even[i/2] = x[i];
@@ -46,8 +45,7 @@ vector<complex<double>> dsp::_fft_recursive(vector<complex<double>> x) {
         vector<complex<double>> O = dsp::_fft_recursive(odd);
 
         // calculate the fft X...
-        vector<complex<double>> X;
-        X.resize(N);
+        vector<complex<double>> X(N);
         double N_ = static_cast<double>(N);
         for (size_t k = 0; k < N/2; k++) {
             
@@ -83,13 +81,43 @@ vector<complex<double>> dsp::fft(vector<complex<double>> x) {
 dsp::FrequencyData dsp::fft_with_metadata(dsp::TimeData data) {
     using namespace dsp;
 
-    // vector<complex<double>> x(data.bins.begin(), data.bins.end());
     vector<complex<double>> x = data.bins;
 
     vector<complex<double>> X = fft(x);
 
     double sample_rate = 1/data.t_step;
-    double f_step = sample_rate/X.size();
+    double f_step = sample_rate/x.size();
 
     return FrequencyData(f_step, X);
+}
+
+vector<dsp::FrequencyData> dsp::sftp(dsp::TimeData data, double t_hop) {
+    // convert the t_hop to number of bins to hop
+    uint32_t bin_hop = t_hop/data.t_step;
+
+    double sample_rate = 1/data.t_step;
+    vector<FrequencyData> results;
+    size_t i;
+    for (i = 0; i < data.bins.size(); i += bin_hop) {
+        vector<complex<double>> slice_t_domain(&data.bins[i], &data.bins[i + bin_hop - 1]);
+        vector<complex<double>> windowed_slice = dsp::hann_window(slice_t_domain);
+
+        vector<complex<double>> slice_f_domain = dsp::fft(slice_t_domain);
+        double f_step = sample_rate/slice_t_domain.size();
+
+        results.push_back(FrequencyData(f_step, slice_f_domain));
+    }
+
+    // assure that all of the signal is converted...
+    if (i < data.bins.size()) {
+        vector<complex<double>> slice_t_domain(&data.bins[i], &data.bins[data.bins.size() - 1]);
+        vector<complex<double>> windowed_slice = dsp::hann_window(slice_t_domain);
+
+        vector<complex<double>> slice_f_domain = dsp::fft(slice_t_domain);
+        double f_step = sample_rate/slice_t_domain.size();
+
+        results.push_back(FrequencyData(f_step, slice_f_domain));
+    }
+
+    return results;
 }

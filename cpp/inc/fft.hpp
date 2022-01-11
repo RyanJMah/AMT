@@ -18,6 +18,5 @@ namespace dsp {
     std::vector<std::complex<double>> ifft(std::vector<std::complex<double>> X);
     TimeData iff_with_metada(FrequencyData data);
 
-    std::vector< std::vector<std::complex<double>> > stft(std::vector<std::complex<double>> x);
-    std::vector<FrequencyData> sftp_with_metadata(TimeData data);
+    std::vector<FrequencyData> sftp(TimeData data, double t_hop);
 }

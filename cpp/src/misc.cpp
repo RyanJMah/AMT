@@ -7,6 +7,8 @@
 using std::vector;
 using std::complex;
 
+static const double PI = std::atan(1)*4;
+
 vector<double> dsp::mag(vector<complex<double>> x) {
     vector<double> ret;
 
@@ -17,7 +19,6 @@ vector<double> dsp::mag(vector<complex<double>> x) {
 
     return ret;
 }
-
 vector<double> dsp::arg(vector<complex<double>> x) {
     vector<double> ret;
 
@@ -35,7 +36,6 @@ vector<double> dsp::arg(vector<complex<double>> x) {
 
     return ret;
 }
-
 vector<double> dsp::re(vector<complex<double>> x) {
     vector<double> ret;
 
@@ -46,7 +46,6 @@ vector<double> dsp::re(vector<complex<double>> x) {
 
     return ret;
 }
-
 vector<double> dsp::im(vector<complex<double>> x) {
     vector<double> ret;
 
@@ -54,6 +53,17 @@ vector<double> dsp::im(vector<complex<double>> x) {
         return std::imag(n);
     };
     std::transform(x.begin(), x.end(), std::back_inserter(ret), callback);
+
+    return ret;
+}
+
+vector<complex<double>> dsp::hann_window(vector<complex<double>> x) {
+    vector<complex<double>> ret(x.size());
+
+    for (size_t i = 0; i < x.size(); i++) {
+        complex<double> multiplier = 0.5*( 1 - std::cos(2*PI*i/(x.size() - 1)) );
+        ret[i] = multiplier*x[i];
+    }
 
     return ret;
 }

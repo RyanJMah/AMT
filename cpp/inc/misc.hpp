@@ -8,4 +8,6 @@ namespace dsp {
     std::vector<double> arg(std::vector<std::complex<double>> x);
     std::vector<double> re(std::vector<std::complex<double>> x);
     std::vector<double> im(std::vector<std::complex<double>> x);
+
+    std::vector<std::complex<double>> hann_window(std::vector<std::complex<double>> x);
 }

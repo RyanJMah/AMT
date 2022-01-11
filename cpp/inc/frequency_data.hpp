@@ -3,6 +3,8 @@
 #include <vector>
 #include <complex>
 
+// I know I should probably be inheriting from something here, but I'm also lazy so too bad
+
 namespace dsp {
     class FrequencyData {
         public:
